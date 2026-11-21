@@ -53,9 +53,9 @@ df = pd.read_csv("dados/dados_preprocessados.csv")      # rótulos (Canal, Regia
 | 1 | Amabilly | Base, EDA e pré-processamento ✅ |
 | 2 | Roger | Treino do SOM |
 | 3 | Erica | Visualizações (U-Matrix, component planes, hit map) |
-| 4 | Rafael | Clusters e outliers |
+| 4 | Ruan | Clusters e outliers |
 | 5 | Herbe | Comparação com K-Means e PCA |
-| 6 | Ruan | Perfis, aplicações e consolidação |
+| 6 | Rafael | Perfis, aplicações e consolidação |
 
 ## Base de dados
 
