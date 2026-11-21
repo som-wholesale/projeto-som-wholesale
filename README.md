@@ -12,10 +12,18 @@ Projeto final de **Aprendizado Não Supervisionado**: segmentação de 440 clien
 ├── TAREFAS.md                              ← o que cada um precisa fazer
 ├── PROJETO.md                              ← registro central (decisões, histórico)
 ├── 01_Amabilly_EDA_preprocessamento.ipynb  ← Parte 1 ✅
+├── 02_Roger_treino_som.ipynb               ← Parte 2 ✅
+├── 03_Erica_visualizacoes.ipynb            ← Parte 3 ✅
+├── 04_Ruan_clusters_outliers.ipynb         ← Parte 4 ✅
+├── 05_Herbe_comparacao.ipynb               ← Parte 5 ✅
+├── 06_Rafael_perfis.ipynb                  ← Parte 6 ✅
 ├── dados/
 │   ├── Wholesale customers data.csv        ← base original (UCI)
-│   ├── X_scaled.csv                        ← 440×6 padronizado → entrada do SOM
-│   └── dados_preprocessados.csv            ← base + Canal/Regiao em texto + colunas log_*
+│   ├── X_scaled.csv                        ← 440×6 padronizado, entrada do SOM
+│   ├── dados_preprocessados.csv            ← base + Canal/Regiao em texto + colunas log_*
+│   ├── som.pkl / som_pesos.npy             ← mapa treinado (Parte 2)
+│   ├── clusters.csv                        ← cluster e outlier de cada cliente (Parte 4)
+│   └── scaler.pkl                          ← scaler para classificar clientes novos (Parte 6)
 └── figuras/                                ← gráficos para relatório e slides
 ```
 
@@ -26,6 +34,8 @@ git clone <url-do-repositorio>
 cd <pasta>
 pip install -r requirements.txt
 ```
+
+Rode os notebooks em ordem (`01` a `06`). Cada um lê o que o anterior salvou em `dados/`. Versões usadas: Python 3.13, `minisom` 2.3.6, `scikit-learn` 1.9.1, `numpy` 2.5.3 e `pandas` 3.0.5.
 
 Para carregar os dados prontos na sua parte:
 
@@ -39,7 +49,7 @@ df = pd.read_csv("dados/dados_preprocessados.csv")      # rótulos (Canal, Regia
 
 ## Combinados do grupo
 
-1. **Um notebook por parte**, com nome numerado: `02_Roger_treino_som.ipynb`, `03_Erica_visualizacoes.ipynb`, `04_Rafael_clusters_outliers.ipynb`, `05_Herbe_comparacao.ipynb`, `06_Ruan_perfis.ipynb`. Assim ninguém edita o arquivo do outro e não há conflito.
+1. **Um notebook por parte**, com nome numerado: `02_Roger_treino_som.ipynb`, `03_Erica_visualizacoes.ipynb`, `04_Ruan_clusters_outliers.ipynb`, `05_Herbe_comparacao.ipynb`, `06_Rafael_perfis.ipynb`. Assim ninguém edita o arquivo do outro e não há conflito.
 2. **Sempre `git pull` antes de começar** a trabalhar.
 3. **Salve as figuras em `figuras/`** com o número da sua parte no nome (ex.: `03_umatrix.png`).
 4. **Use `random_seed=42`** em tudo.
@@ -51,11 +61,11 @@ df = pd.read_csv("dados/dados_preprocessados.csv")      # rótulos (Canal, Regia
 | Parte | Pessoa | Etapa |
 |---|---|---|
 | 1 | Amabilly | Base, EDA e pré-processamento ✅ |
-| 2 | Roger | Treino do SOM |
-| 3 | Erica | Visualizações (U-Matrix, component planes, hit map) |
-| 4 | Ruan | Clusters e outliers |
-| 5 | Herbe | Comparação com K-Means e PCA |
-| 6 | Rafael | Perfis, aplicações e consolidação |
+| 2 | Roger | Treino do SOM ✅ |
+| 3 | Erica | Visualizações (U-Matrix, component planes, hit map) ✅ |
+| 4 | Ruan | Clusters e outliers ✅ |
+| 5 | Herbe | Comparação com K-Means e PCA ✅ |
+| 6 | Rafael | Perfis, aplicações e consolidação ✅ |
 
 ## Base de dados
 

@@ -1,18 +1,20 @@
-# TAREFAS.md — O que cada um precisa fazer
+# TAREFAS.md: o que cada um precisa fazer
 
 > Procure o seu nome, veja **o que você recebe**, **o que você entrega** e siga o passo a passo.
 > O contexto completo e as decisões do projeto estão no [PROJETO.md](PROJETO.md).
+
+> **Status (21/11):** todas as partes estão prontas. Os resultados de cada uma estão no resumo final do notebook correspondente e na seção 6.7 do [PROJETO.md](PROJETO.md). Cada um deve revisar o próprio notebook e as notas de fala do seu slide antes da apresentação.
 
 ## Visão geral
 
 | Parte | Pessoa | Etapa | Notebook | Depende de | Status |
 |---|---|---|---|---|---|
-| 1 | **Amabilly** | Base, EDA e pré-processamento | `01_Amabilly_EDA_preprocessamento.ipynb` | — | ✅ Concluído |
-| 2 | **Roger** | Treino do SOM e ajuste de parâmetros | `02_Roger_treino_som.ipynb` | Parte 1 | ⬜ Pode começar |
-| 3 | **Erica** | Visualizações do mapa | `03_Erica_visualizacoes.ipynb` | Parte 2 | ⬜ |
-| 4 | **Rafael** | Clusters no mapa e outliers | `04_Rafael_clusters_outliers.ipynb` | Parte 2 | ⬜ |
-| 5 | **Herbe** | Comparação com K-Means e PCA | `05_Herbe_comparacao.ipynb` | Partes 2 e 4 | ⬜ |
-| 6 | **Ruan** | Perfis, aplicações e consolidação | `06_Ruan_perfis.ipynb` | Partes 4 e 5 | ⬜ |
+| 1 | **Amabilly** | Base, EDA e pré-processamento | `01_Amabilly_EDA_preprocessamento.ipynb` | nenhuma | ✅ Concluído |
+| 2 | **Roger** | Treino do SOM e ajuste de parâmetros | `02_Roger_treino_som.ipynb` | Parte 1 | ✅ Concluído |
+| 3 | **Erica** | Visualizações do mapa | `03_Erica_visualizacoes.ipynb` | Parte 2 | ✅ Concluído |
+| 4 | **Ruan** | Clusters no mapa e outliers | `04_Ruan_clusters_outliers.ipynb` | Parte 2 | ✅ Concluído |
+| 5 | **Herbe** | Comparação com K-Means e PCA | `05_Herbe_comparacao.ipynb` | Partes 2 e 4 | ✅ Concluído |
+| 6 | **Rafael** | Perfis, aplicações e consolidação | `06_Rafael_perfis.ipynb` | Partes 4 e 5 | ✅ Concluído |
 
 **Fluxo dos arquivos entre as partes:**
 
@@ -22,13 +24,13 @@ Amabilly ──► dados/X_scaled.csv, dados/dados_preprocessados.csv
 Roger ─────► dados/som.pkl (mapa treinado)
    │
    ├──► Erica  (figuras do mapa)
-   └──► Rafael ──► dados/clusters.csv (cluster e outlier de cada cliente)
+   └──► Ruan ──► dados/clusters.csv (cluster e outlier de cada cliente)
                      │
                      ├──► Herbe ──► tabela de comparação (ARI, silhouette)
-                     └──► Ruan  ──► perfis, conclusão, relatório e slides
+                     └──► Rafael  ──► perfis, conclusão, relatório e slides
 ```
 
-Cada pessoa escreve no relatório a parte que fez e apresenta essa parte (cerca de 2–3 minutos).
+Cada pessoa escreve no relatório a parte que fez e apresenta essa parte (cerca de 2-3 minutos).
 
 ---
 
@@ -79,7 +81,7 @@ Cada pessoa escreve no relatório a parte que fez e apresenta essa parte (cerca 
 2. Use um mapa **10×10** (regra: neurônios ≈ 5·√N; com N = 440, cerca de 105).
 3. Teste `sigma` em {1.0, 1.5, 2.0} e `learning_rate` em {0.3, 0.5}, o que dá 6 combinações.
 4. Compare as combinações pelo **erro de quantização (QE)**, quanto menor melhor, e pelo **erro topográfico (TE)**, quanto menor melhor.
-5. Escolha a melhor configuração e justifique em uma tabela.
+5. Escolha a melhor configuração e justifique em uma tabela. **Critério usado:** TE médio de 5 sementes ≤ 0,10; depois o menor QE; se a diferença de QE for menor que o desvio entre sementes, vence o menor TE. Só ordenar por TE (como no código abaixo) escolheria o sigma maior da grade, mesmo com o pior QE.
 6. Treine o modelo final e **salve em `dados/som.pkl`**.
 
 ```python
@@ -112,7 +114,7 @@ with open("dados/som.pkl", "rb") as f:
 ```
 
 **Para o relatório:** o que é o SOM (em uma frase), por que um mapa 10×10, a tabela de testes e os parâmetros escolhidos.
-**Assim que o `som.pkl` subir, avise o grupo**, porque a Erica e o Rafael dependem dele.
+**Assim que o `som.pkl` subir, avise o grupo**, porque a Erica e o Ruan dependem dele.
 
 ---
 
@@ -123,8 +125,8 @@ with open("dados/som.pkl", "rb") as f:
 
 **Passo a passo:**
 1. **U-Matrix:** use `som.distance_map()`.
-   - Regiões claras são **fronteiras** entre grupos.
-   - Regiões escuras são **grupos**.
+   - Com a escala de cinza do claro ao escuro, regiões escuras são **fronteiras** entre grupos.
+   - Regiões claras são **grupos**.
 2. **Component planes:** faça um mapa por variável com `som.get_weights()[:, :, i]`, para `i` de 0 a 5, na ordem de `GASTOS`. Eles mostram em que região do mapa cada produto é alto.
 3. **Hit map:** use `som.activation_response(X_scaled)`. Ele mostra quantos clientes caíram em cada neurônio.
 4. **Sobreposição do `Channel`:** para cada cliente, pegue `som.winner(x)` e marque no mapa com a cor do canal (Horeca em azul, Varejo em laranja), por cima da U-Matrix.
@@ -135,7 +137,7 @@ with open("dados/som.pkl", "rb") as f:
 
 ---
 
-## Parte 4: Rafael · Clusters e outliers
+## Parte 4: Ruan · Clusters e outliers
 
 **Recebe:** `dados/som.pkl` e `dados/X_scaled.csv`
 **Entrega:** o k escolhido, o mapa colorido por cluster, a lista de outliers e o arquivo **`dados/clusters.csv`**.
@@ -154,7 +156,7 @@ with open("dados/som.pkl", "rb") as f:
    ```
    Confira também se há neurônios isolados na U-Matrix.
 5. Pinte o mapa com as cores dos clusters.
-6. **Salve `dados/clusters.csv`**, que o Herbe e o Ruan vão usar. Ele deve ter uma linha por cliente, na mesma ordem da base:
+6. **Salve `dados/clusters.csv`**, que o Herbe e o Rafael vão usar. Ele deve ter uma linha por cliente, na mesma ordem da base:
 
    | coluna | conteúdo |
    |---|---|
@@ -169,11 +171,11 @@ with open("dados/som.pkl", "rb") as f:
 
 ## Parte 5: Herbe · Comparação com K-Means e PCA
 
-**Recebe:** `dados/X_scaled.csv` e `dados/clusters.csv` (com o k do Rafael)
+**Recebe:** `dados/X_scaled.csv` e `dados/clusters.csv` (com o k do Ruan)
 **Entrega:** os gráficos PCA 2D, o ARI, o silhouette e uma tabela de prós e contras.
 
 **Passo a passo:**
-1. Rode o **K-Means direto em `X_scaled`**, com o **mesmo k** do Rafael e `random_state=42`.
+1. Rode o **K-Means direto em `X_scaled`**, com o **mesmo k** do Ruan e `random_state=42`.
 2. Rode o **PCA com 2 componentes** e faça dois gráficos de dispersão lado a lado:
    - um colorido pelos clusters do SOM (coluna `cluster` do `clusters.csv`);
    - outro colorido pelos clusters do K-Means.
@@ -189,7 +191,7 @@ with open("dados/som.pkl", "rb") as f:
 
 ---
 
-## Parte 6: Ruan · Perfis, aplicações e consolidação
+## Parte 6: Rafael · Perfis, aplicações e consolidação
 
 **Recebe:** `dados/dados_preprocessados.csv`, `dados/clusters.csv` e os resultados de todos
 **Entrega:** os perfis nomeados, as aplicações, a conclusão, o relatório final e os slides.
@@ -219,9 +221,9 @@ with open("dados/som.pkl", "rb") as f:
 
 | Fase | Quem | Depende de |
 |---|---|---|
-| Dias 1–2 | Amabilly | — ✅ |
-| Dias 2–3 | Roger | `X_scaled.csv` (já disponível) |
-| Dias 3–5 | Erica e Rafael em paralelo; Herbe começa o K-Means e o PCA | `som.pkl` |
-| Dias 4–5 | Herbe termina a comparação | `clusters.csv` |
-| Dias 5–6 | Ruan | `clusters.csv` e a comparação do Herbe |
+| Dias 1-2 | Amabilly | nenhuma ✅ |
+| Dias 2-3 | Roger | `X_scaled.csv` (já disponível) |
+| Dias 3-5 | Erica e Ruan em paralelo; Herbe começa o K-Means e o PCA | `som.pkl` |
+| Dias 4-5 | Herbe termina a comparação | `clusters.csv` |
+| Dias 5-6 | Rafael | `clusters.csv` e a comparação do Herbe |
 | Dia 7 | Todos | Revisão e ensaio da apresentação |
