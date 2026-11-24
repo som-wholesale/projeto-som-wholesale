@@ -1,7 +1,8 @@
-numpy
-pandas
-matplotlib
-seaborn
-scikit-learn
-minisom
+numpy>=2.5
+pandas>=3.0
+matplotlib>=3.10
+seaborn>=0.13
+scikit-learn>=1.9
+scipy>=1.16
+minisom==2.3.6
 jupyter

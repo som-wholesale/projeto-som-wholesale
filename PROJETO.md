@@ -35,7 +35,7 @@
 | Hiperparâmetros | **`sigma=2.0`, `learning_rate=0.3`**, `pca_weights_init`, 5000 iterações, com QE = 0,898 e TE = 0,050. Critério: TE médio (5 sementes) ≤ 0,10; depois menor QE; empate (diferença menor que o desvio entre sementes) decidido pelo menor TE | ✅ Definido (Parte 2) |
 | Semente | `random_seed=42` em tudo (SOM e K-Means) | Definido |
 | Ambiente | Notebooks por parte (o primeiro é `01_Amabilly_EDA_preprocessamento.ipynb`); roda local ou no Colab (baixa a base da UCI se o CSV não estiver em `dados/`) | Em uso |
-| Repositório | **GitHub público:** https://github.com/Mabynha20/projeto-som-wholesale (branch `main`). Cada pessoa cria o próprio notebook numerado (`02_Roger_...`, `03_Erica_...` etc.), faz `git pull` antes de começar e atualiza o PROJETO.md ao terminar. Combinados completos no README | ✅ Criado |
+| Repositório | **GitHub público:** https://github.com/som-wholesale/projeto-som-wholesale (branch `main`; criado como `Mabynha20/projeto-som-wholesale`). Cada pessoa cria o próprio notebook numerado (`02_Roger_...`, `03_Erica_...` etc.), faz `git pull` antes de começar e atualiza o PROJETO.md ao terminar. Combinados completos no README | ✅ Criado |
 | Paleta dos gráficos | Azul `#2a78d6` (série única e Horeca), laranja `#eb6834` (Varejo), cinza `#52514e` (referências). Manter nas outras partes | Definido (Parte 1) |
 | Métricas | Erro de quantização, erro topográfico, silhouette, Adjusted Rand Index e estabilidade entre sementes (ARI em 10 sementes) | ✅ Usado |
 | Outliers (no SOM) | Erro de quantização individual > percentil 95 (1,87): 22 clientes. Conferido com a cerca de Tukey sobre o erro (23 clientes, concorda em 439 de 440), porque o percentil 95 sozinho sempre marca 5% | ✅ Feito (Parte 4) |
@@ -48,7 +48,7 @@
 
 | # | Pessoa | Etapa | Entrega | Status |
 |---|---|---|---|---|
-| 1 | **Amabilly** | Base, análise exploratória e pré-processamento | `X_scaled` pronto e EDA com gráficos | ✅ Concluído (falta revisão do grupo) |
+| 1 | **Amabilly** | Base, análise exploratória e pré-processamento | `X_scaled` pronto e EDA com gráficos | ✅ Concluído |
 | 2 | **Roger** | Treino do SOM e ajuste de parâmetros | Mapa treinado e tabela de testes (QE/TE) | ✅ Concluído |
 | 3 | **Erica** | Visualizações do mapa | U-Matrix, component planes, hit map, sobreposição de `Channel` | ✅ Concluído |
 | 4 | **Ruan** | Clusters no mapa e outliers | k escolhido, mapa colorido por cluster, lista de outliers | ✅ Concluído |
@@ -79,7 +79,8 @@ projeto final/
 │   ├── som.pkl / som_pesos.npy             ← mapa treinado (Parte 2); os pesos são o plano B se o pickle não abrir
 │   ├── clusters.csv                        ← bmu_x, bmu_y, cluster, erro_quant, outlier (Parte 4)
 │   └── scaler.pkl                          ← StandardScaler da Parte 1, para clientes novos (Parte 6)
-└── figuras/                                ← EDA (01 a 07, Parte 1) e figuras das Partes 2 a 6 (prefixo = nº da parte)
+├── figuras/                                ← EDA (Parte 1) e figuras das Partes 2 a 6 (prefixo = nº da parte)
+└── entrega/                                ← relatorio_final.pdf, slides_apresentacao.pdf e .pptx (com notas de fala)
 ```
 
 Como as outras partes carregam os dados:
@@ -194,9 +195,7 @@ Enquanto espera as outras etapas, o Rafael pode adiantar a estrutura dos slides 
 ## 9. Próximos passos, pendências e dúvidas em aberto
 
 - **Todos:** cada um revisa o próprio notebook e as notas de fala do seu slide, e confere se consegue explicar cada número. O professor pode perguntar sobre qualquer parte.
-- Confirmar o prazo de entrega e a data da apresentação com o professor. **Data: ___ (preencher)**
-- Definir o formato da entrega: notebooks separados (como está), um notebook único ou PDF do relatório. O relatório e os slides podem ser exportados em .docx/PDF e .pptx/PDF.
-- Colaboradores no GitHub: Erica `11erica006`, Rafael `rodyneyh`, Herbe `herbefragoso` e Ruan `RuaanSouza` (convites enviados, aguardando aceite). Roger `rcoliveirasb`: convite pendente de confirmação.
+- **Formato da entrega (definido):** notebooks separados, executados, mais o relatório e os slides em PDF na pasta `entrega/`. O `.pptx` traz as notas de fala.
 - Opcional: validar os perfis com alguém da área comercial e conferir os 22 clientes atípicos.
 
 ## 10. Histórico de atualizações
@@ -215,3 +214,4 @@ Enquanto espera as outras etapas, o Rafael pode adiantar a estrutura dos slides 
 | 2026-11-21 | k = 3 (cotovelo) em vez de k = 2 (silhouette, diferença de só 0,027). Outliers conferidos com a cerca de Tukey. Descrição da U-Matrix corrigida (escuro = fronteira). | k = 2 só repetiria o canal; o percentil 95 sozinho é circular. |
 | 2026-11-21 | Relatório escrito e slides (14, com notas de fala por integrante) criados. | Entrega final. |
 | 2026-11-21 | Slides refeitos para a gravação de 10 minutos: 9 slides, uma mensagem por slide, roteiro cronometrado nas notas e construção compatível com o Canva. | O tempo total é de 10 minutos. |
+| 2026-11-24 | Criada a pasta `entrega/` com o relatório e os slides (PDF e PPTX). Os arquivos gerados pelas Partes 2 a 6 foram movidos para `dados/` e `figuras/`. Os 6 notebooks foram executados de novo, do zero, e reproduziram todas as saídas. | Entrega final autocontida no repositório. Os notebooks 03 a 06 não abriam sozinhos, porque procuravam em `dados/` arquivos que estavam na raiz. |

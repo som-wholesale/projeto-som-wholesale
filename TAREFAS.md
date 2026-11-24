@@ -60,7 +60,7 @@ Cada pessoa escreve no relatório a parte que fez e apresenta essa parte (cerca 
 **Entregou:**
 - `dados/X_scaled.csv`: 440 × 6, com `log1p` e depois `StandardScaler`.
 - `dados/dados_preprocessados.csv`: a base original com as colunas `Canal` e `Regiao` em texto e as colunas `log_*`.
-- Figuras 01 a 07 em `figuras/`.
+- 7 figuras em `figuras/`, todas com o prefixo `01_`.
 
 **Achados que ajudam as próximas partes:**
 - **Dois blocos de produtos:**
